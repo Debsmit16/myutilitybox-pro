@@ -33,19 +33,25 @@ function App() {
   ];
 
   const renderActiveComponent = () => {
-    switch (activeTab) {
-      case 'todo':
-        return <TodoList />;
-      case 'notes':
-        return <NotePad />;
-      case 'calculator':
-        return <Calculator />;
-      case 'weather':
-        return <WeatherWidget />;
-      case 'pomodoro':
-        return <PomodoroTimer />;
-      default:
-        return <TodoList />;
+    try {
+      console.log('Rendering tab:', activeTab);
+      switch (activeTab) {
+        case 'todo':
+          return <TodoList />;
+        case 'notes':
+          return <div style={{padding: '20px'}}><h2>📝 NotePad</h2><p>Note-taking functionality coming soon...</p></div>;
+        case 'calculator':
+          return <div style={{padding: '20px'}}><h2>🔢 Calculator</h2><p>Calculator functionality coming soon...</p></div>;
+        case 'weather':
+          return <div style={{padding: '20px'}}><h2>🌤️ Weather</h2><p>Weather widget coming soon...</p></div>;
+        case 'pomodoro':
+          return <div style={{padding: '20px'}}><h2>⏰ Pomodoro Timer</h2><p>Pomodoro timer coming soon...</p></div>;
+        default:
+          return <TodoList />;
+      }
+    } catch (error) {
+      console.error('Error rendering component:', error);
+      return <div>Error loading component. Please try again.</div>;
     }
   };
 
