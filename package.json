@@ -1,8 +1,8 @@
 {
   "name": "myutilitybox-pro",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
-  "description": "A comprehensive utility application with todo list, notes, calculator, weather, pomodoro timer, and more!",
+  "description": "A comprehensive all-in-one utility application with 15+ productivity tools including todo list, notes, calculator, weather, pomodoro timer, QR generator, and much more!",
   "keywords": [
     "react",
     "utility",
@@ -11,7 +11,19 @@
     "calculator",
     "weather",
     "pomodoro",
-    "notes"
+    "notes",
+    "qr-generator",
+    "password-generator",
+    "color-picker",
+    "unit-converter",
+    "tip-calculator",
+    "bmi-calculator",
+    "text-tools",
+    "world-clock",
+    "link-shortener",
+    "all-in-one",
+    "tools",
+    "web-app"
   ],
   "author": "Debsmit Saha",
   "repository": {
