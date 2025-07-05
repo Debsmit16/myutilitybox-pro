@@ -9,6 +9,10 @@ import WeatherWidget from './components/WeatherWidget';
 import PomodoroTimer from './components/PomodoroTimer';
 import UnitConverter from './components/UnitConverter';
 import PasswordGenerator from './components/PasswordGenerator';
+import ColorPicker from './components/ColorPicker';
+import TextTools from './components/TextTools';
+import TipCalculator from './components/TipCalculator';
+import BMICalculator from './components/BMICalculator';
 
 function App() {
   const [activeTab, setActiveTab] = useState('todo');
@@ -33,7 +37,11 @@ function App() {
     { id: 'weather', name: 'Weather', icon: '🌤️' },
     { id: 'pomodoro', name: 'Pomodoro', icon: '⏰' },
     { id: 'converter', name: 'Unit Converter', icon: '📏' },
-    { id: 'password', name: 'Password Gen', icon: '🔐' }
+    { id: 'password', name: 'Password Gen', icon: '🔐' },
+    { id: 'colors', name: 'Color Picker', icon: '🎨' },
+    { id: 'text', name: 'Text Tools', icon: '📝' },
+    { id: 'tip', name: 'Tip Calculator', icon: '💳' },
+    { id: 'bmi', name: 'BMI Calculator', icon: '🏃‍♂️' }
   ];
 
   const renderActiveComponent = () => {
@@ -54,6 +62,14 @@ function App() {
           return <UnitConverter />;
         case 'password':
           return <PasswordGenerator />;
+        case 'colors':
+          return <ColorPicker />;
+        case 'text':
+          return <TextTools />;
+        case 'tip':
+          return <TipCalculator />;
+        case 'bmi':
+          return <BMICalculator />;
         default:
           return <TodoList />;
       }
