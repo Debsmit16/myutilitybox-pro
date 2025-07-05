@@ -39,13 +39,13 @@ function App() {
         case 'todo':
           return <TodoList />;
         case 'notes':
-          return <div style={{padding: '20px'}}><h2>📝 NotePad</h2><p>Note-taking functionality coming soon...</p></div>;
+          return <NotePad />;
         case 'calculator':
-          return <div style={{padding: '20px'}}><h2>🔢 Calculator</h2><p>Calculator functionality coming soon...</p></div>;
+          return <Calculator />;
         case 'weather':
-          return <div style={{padding: '20px'}}><h2>🌤️ Weather</h2><p>Weather widget coming soon...</p></div>;
+          return <WeatherWidget />;
         case 'pomodoro':
-          return <div style={{padding: '20px'}}><h2>⏰ Pomodoro Timer</h2><p>Pomodoro timer coming soon...</p></div>;
+          return <PomodoroTimer />;
         default:
           return <TodoList />;
       }
