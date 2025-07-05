@@ -11,7 +11,7 @@ const Calculator = () => {
   useEffect(() => {
     const handleKeyPress = (event) => {
       const { key } = event;
-      
+
       if (key >= '0' && key <= '9') {
         inputNumber(key);
       } else if (key === '.') {
@@ -29,7 +29,7 @@ const Calculator = () => {
 
     document.addEventListener('keydown', handleKeyPress);
     return () => document.removeEventListener('keydown', handleKeyPress);
-  }, [display, previousValue, operation, waitingForOperand]);
+  }, [display, previousValue, operation, waitingForOperand, inputNumber, inputDecimal, calculate, inputOperation, backspace]);
 
   const inputNumber = (num) => {
     if (waitingForOperand) {

@@ -52,7 +52,7 @@ const WeatherWidget = () => {
 
   useEffect(() => {
     loadWeatherData(city);
-  }, []);
+  }, [city, loadWeatherData]);
 
   const loadWeatherData = (cityName) => {
     setLoading(true);

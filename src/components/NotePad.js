@@ -33,7 +33,7 @@ const NotePad = () => {
       }, 1000);
       return () => clearTimeout(timer);
     }
-  }, [currentNote.title, currentNote.content, selectedNoteId]);
+  }, [currentNote.title, currentNote.content, selectedNoteId, saveCurrentNote]);
 
   const createNewNote = () => {
     const newNote = {

@@ -16,7 +16,6 @@ const PomodoroTimer = () => {
   const [showSettings, setShowSettings] = useState(false);
   
   const intervalRef = useRef(null);
-  const audioRef = useRef(null);
 
   useEffect(() => {
     if (isActive && timeLeft > 0) {
@@ -30,7 +29,7 @@ const PomodoroTimer = () => {
     }
 
     return () => clearInterval(intervalRef.current);
-  }, [isActive, timeLeft]);
+  }, [isActive, timeLeft, handleTimerComplete]);
 
   const handleTimerComplete = () => {
     setIsActive(false);
