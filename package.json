@@ -3,7 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "description": "A comprehensive utility application with todo list, notes, calculator, weather, pomodoro timer, and more!",
-  "keywords": ["react", "utility", "productivity", "todo", "calculator", "weather", "pomodoro", "notes"],
+  "keywords": [
+    "react",
+    "utility",
+    "productivity",
+    "todo",
+    "calculator",
+    "weather",
+    "pomodoro",
+    "notes"
+  ],
   "author": "Debsmit Saha",
   "repository": {
     "type": "git",
@@ -15,6 +24,7 @@
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^13.5.0",
+    "qrcode": "^1.5.4",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-scripts": "5.0.1",

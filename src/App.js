@@ -13,6 +13,9 @@ import ColorPicker from './components/ColorPicker';
 import TextTools from './components/TextTools';
 import TipCalculator from './components/TipCalculator';
 import BMICalculator from './components/BMICalculator';
+import QRCodeGenerator from './components/QRCodeGenerator';
+import WorldClock from './components/WorldClock';
+import LinkShortener from './components/LinkShortener';
 
 function App() {
   const [activeTab, setActiveTab] = useState('todo');
@@ -30,18 +33,46 @@ function App() {
     localStorage.setItem('accentColor', accentColor);
   }, [theme, accentColor]);
 
-  const tabs = [
-    { id: 'todo', name: 'To-Do List', icon: '✓' },
-    { id: 'notes', name: 'Notes', icon: '📝' },
-    { id: 'calculator', name: 'Calculator', icon: '🔢' },
-    { id: 'weather', name: 'Weather', icon: '🌤️' },
-    { id: 'pomodoro', name: 'Pomodoro', icon: '⏰' },
-    { id: 'converter', name: 'Unit Converter', icon: '📏' },
-    { id: 'password', name: 'Password Gen', icon: '🔐' },
-    { id: 'colors', name: 'Color Picker', icon: '🎨' },
-    { id: 'text', name: 'Text Tools', icon: '📝' },
-    { id: 'tip', name: 'Tip Calculator', icon: '💳' },
-    { id: 'bmi', name: 'BMI Calculator', icon: '🏃‍♂️' }
+  const toolCategories = [
+    {
+      name: '📋 Productivity',
+      tools: [
+        { id: 'todo', name: 'To-Do List', icon: '✓' },
+        { id: 'notes', name: 'Notes', icon: '📝' },
+        { id: 'pomodoro', name: 'Pomodoro', icon: '⏰' },
+        { id: 'worldclock', name: 'World Clock', icon: '🌍' }
+      ]
+    },
+    {
+      name: '🔧 Tools & Utilities',
+      tools: [
+        { id: 'calculator', name: 'Calculator', icon: '🔢' },
+        { id: 'converter', name: 'Unit Converter', icon: '📏' },
+        { id: 'password', name: 'Password Gen', icon: '🔐' },
+        { id: 'qrcode', name: 'QR Generator', icon: '📱' },
+        { id: 'linkshortener', name: 'Link Shortener', icon: '🔗' }
+      ]
+    },
+    {
+      name: '🎨 Design & Text',
+      tools: [
+        { id: 'colors', name: 'Color Picker', icon: '🎨' },
+        { id: 'text', name: 'Text Tools', icon: '📝' }
+      ]
+    },
+    {
+      name: '💰 Finance & Health',
+      tools: [
+        { id: 'tip', name: 'Tip Calculator', icon: '💳' },
+        { id: 'bmi', name: 'BMI Calculator', icon: '🏃‍♂️' }
+      ]
+    },
+    {
+      name: '🌤️ Information',
+      tools: [
+        { id: 'weather', name: 'Weather', icon: '🌤️' }
+      ]
+    }
   ];
 
   const renderActiveComponent = () => {
@@ -70,6 +101,12 @@ function App() {
           return <TipCalculator />;
         case 'bmi':
           return <BMICalculator />;
+        case 'qrcode':
+          return <QRCodeGenerator />;
+        case 'worldclock':
+          return <WorldClock />;
+        case 'linkshortener':
+          return <LinkShortener />;
         default:
           return <TodoList />;
       }
@@ -103,16 +140,25 @@ function App() {
       <div className="app-content">
         {/* Sidebar */}
         <aside className="sidebar">
-          <nav className="nav-tabs">
-            {tabs.map(tab => (
-              <button
-                key={tab.id}
-                className={`nav-tab ${activeTab === tab.id ? 'active' : ''}`}
-                onClick={() => setActiveTab(tab.id)}
-              >
-                <span className="tab-icon">{tab.icon}</span>
-                <span className="tab-name">{tab.name}</span>
-              </button>
+          <nav className="nav-categories">
+            {toolCategories.map((category, categoryIndex) => (
+              <div key={categoryIndex} className="nav-category">
+                <div className="category-header">
+                  <h3 className="category-title">{category.name}</h3>
+                </div>
+                <div className="category-tools">
+                  {category.tools.map(tool => (
+                    <button
+                      key={tool.id}
+                      className={`nav-tab ${activeTab === tool.id ? 'active' : ''}`}
+                      onClick={() => setActiveTab(tool.id)}
+                    >
+                      <span className="tab-icon">{tool.icon}</span>
+                      <span className="tab-name">{tool.name}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
             ))}
           </nav>
         </aside>
