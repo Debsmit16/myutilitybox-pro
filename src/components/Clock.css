@@ -1,0 +1,43 @@
+.clock-widget {
+  text-align: center;
+  padding: 0.5rem;
+}
+
+.greeting {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.25rem;
+  font-weight: 500;
+}
+
+.time-display {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--accent-color);
+  margin-bottom: 0.25rem;
+  font-family: 'Courier New', monospace;
+}
+
+.date-display {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+@media (max-width: 768px) {
+  .clock-widget {
+    padding: 0.25rem;
+  }
+  
+  .greeting {
+    font-size: 0.8rem;
+  }
+  
+  .time-display {
+    font-size: 1rem;
+  }
+  
+  .date-display {
+    font-size: 0.7rem;
+  }
+}

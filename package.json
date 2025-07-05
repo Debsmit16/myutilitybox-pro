@@ -2,6 +2,14 @@
   "name": "myutilitybox-pro",
   "version": "0.1.0",
   "private": true,
+  "description": "A comprehensive utility application with todo list, notes, calculator, weather, pomodoro timer, and more!",
+  "keywords": ["react", "utility", "productivity", "todo", "calculator", "weather", "pomodoro", "notes"],
+  "author": "Debsmit Saha",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Debsmit16/myutilitybox-pro.git"
+  },
+  "homepage": "https://myutilitybox-pro.vercel.app",
   "dependencies": {
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
