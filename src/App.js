@@ -7,6 +7,8 @@ import Clock from './components/Clock';
 import ThemeSwitcher from './components/ThemeSwitcher';
 import WeatherWidget from './components/WeatherWidget';
 import PomodoroTimer from './components/PomodoroTimer';
+import UnitConverter from './components/UnitConverter';
+import PasswordGenerator from './components/PasswordGenerator';
 
 function App() {
   const [activeTab, setActiveTab] = useState('todo');
@@ -29,7 +31,9 @@ function App() {
     { id: 'notes', name: 'Notes', icon: '📝' },
     { id: 'calculator', name: 'Calculator', icon: '🔢' },
     { id: 'weather', name: 'Weather', icon: '🌤️' },
-    { id: 'pomodoro', name: 'Pomodoro', icon: '⏰' }
+    { id: 'pomodoro', name: 'Pomodoro', icon: '⏰' },
+    { id: 'converter', name: 'Unit Converter', icon: '📏' },
+    { id: 'password', name: 'Password Gen', icon: '🔐' }
   ];
 
   const renderActiveComponent = () => {
@@ -46,6 +50,10 @@ function App() {
           return <WeatherWidget />;
         case 'pomodoro':
           return <PomodoroTimer />;
+        case 'converter':
+          return <UnitConverter />;
+        case 'password':
+          return <PasswordGenerator />;
         default:
           return <TodoList />;
       }
