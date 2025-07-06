@@ -1,11 +1,13 @@
-# 🚀 MyUtilityBox Pro
+# 🚀 MyUtilityBox Pro - Full-Stack Edition
 
-A comprehensive, all-in-one utility application built with React that combines 15+ essential productivity tools in one sleek, modern interface. Perfect for daily tasks, calculations, productivity, and much more!
+A comprehensive, full-stack utility application built with React and Firebase that combines 15+ essential productivity tools with user authentication, cloud synchronization, and a professional landing page. Perfect for daily tasks, calculations, productivity, and much more!
 
 ![MyUtilityBox Pro](https://img.shields.io/badge/React-19.1.0-blue.svg)
+![Firebase](https://img.shields.io/badge/Firebase-10.0+-orange.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 ![Vercel](https://img.shields.io/badge/deployed%20on-Vercel-black.svg)
 ![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)
+![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)
 
 ## ✨ Complete Feature Set
 
@@ -33,11 +35,14 @@ A comprehensive, all-in-one utility application built with React that combines 1
 ### 🌤️ **Information**
 - **🌤️ Weather Widget**: Real-time weather information with location-based forecasts
 
-### 🎨 **Customization**
+### 🎨 **Customization & Cloud Features**
 - **Multiple Themes**: Light, dark, and custom color themes
 - **Accent Colors**: Customizable accent colors throughout the interface
 - **Responsive Design**: Works perfectly on desktop, tablet, and mobile devices
-- **Persistent Settings**: All preferences saved locally
+- **Cloud Sync**: All data synchronized across devices in real-time
+- **User Authentication**: Secure sign-up/sign-in with email or Google
+- **Professional Landing Page**: Beautiful marketing page with features showcase
+- **Protected Dashboard**: Secure access to all utility tools
 
 ## 🚀 Live Demo
 
@@ -45,16 +50,29 @@ Visit the live application: [MyUtilityBox Pro](https://myutilitybox-pro.vercel.a
 
 ## 🛠️ Technologies Used
 
-- **Frontend**: React 19.1.0 with Hooks and Context API
-- **Styling**: CSS3 with custom properties, Flexbox, and Grid
-- **Build Tool**: Create React App with optimized production builds
-- **Deployment**: Vercel with automatic deployments
-- **Testing**: React Testing Library, Jest
-- **Package Manager**: npm
-- **Additional Libraries**:
-  - QRCode.js for QR code generation
-  - Local Storage API for data persistence
-  - Geolocation API for weather services
+### Frontend
+- **React 19.1.0** with Hooks and Context API
+- **React Router DOM** for client-side routing
+- **CSS3** with custom properties, Flexbox, and Grid
+- **Responsive Design** with mobile-first approach
+
+### Backend & Database
+- **Firebase Authentication** for user management
+- **Cloud Firestore** for real-time database
+- **Firebase Hosting** for deployment
+- **Firebase Security Rules** for data protection
+
+### Development & Deployment
+- **Create React App** with optimized production builds
+- **Vercel** for frontend deployment
+- **Firebase CLI** for backend deployment
+- **React Testing Library & Jest** for testing
+- **npm** package manager
+
+### Additional Libraries
+- **QRCode.js** for QR code generation
+- **Firebase SDK** for backend integration
+- **Geolocation API** for weather services
 
 ## 📦 Installation
 
@@ -75,13 +93,26 @@ Visit the live application: [MyUtilityBox Pro](https://myutilitybox-pro.vercel.a
    npm install
    ```
 
-3. **Start the development server**
+3. **Firebase Setup** (Required for full functionality)
+   - Follow the detailed [Firebase Setup Guide](FIREBASE_SETUP.md)
+   - Create a Firebase project
+   - Enable Authentication and Firestore
+   - Update `src/firebase/config.js` with your Firebase config
+
+4. **Start the development server**
    ```bash
    npm start
    ```
 
-4. **Open your browser**
+5. **Open your browser**
    Navigate to `http://localhost:3000` to view the application.
+
+### Quick Demo (No Firebase Required)
+To try the app without setting up Firebase:
+```bash
+npm start
+```
+Then visit `http://localhost:3000/demo` to access the tools directly.
 
 ## 🏗️ Build for Production
 
@@ -231,19 +262,33 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## � Changelog
 
-### Version 1.0.0 (Current)
-- ✅ 15+ utility tools implemented
+### Version 2.0.0 (Current) - Full-Stack Edition
+- 🚀 **NEW**: Professional landing page with hero section and features showcase
+- 🚀 **NEW**: Firebase authentication (Email/Password + Google Sign-In)
+- 🚀 **NEW**: Cloud Firestore database for real-time data sync
+- 🚀 **NEW**: Protected dashboard with user authentication
+- 🚀 **NEW**: User profile management and preferences sync
+- 🚀 **NEW**: React Router for client-side navigation
+- ✅ All 15+ utility tools from v1.0.0
 - ✅ Responsive design for all devices
 - ✅ Multiple theme support with custom accent colors
+- ✅ Cloud storage for todos, notes, and preferences
+- ✅ Real-time data synchronization across devices
+- ✅ Comprehensive Firebase security rules
+- ✅ Professional authentication UI/UX
+
+### Version 1.0.0 (Previous)
+- ✅ 15+ utility tools implemented
 - ✅ Local storage for data persistence
-- ✅ PWA capabilities
-- ✅ Comprehensive testing suite
-- ✅ Vercel deployment with automatic builds
+- ✅ Basic responsive design
+- ✅ Theme system
 
 ### Planned Features
-- 🔄 Cloud sync for notes and todos
-- 🔄 Export/import functionality
-- 🔄 More unit conversion types
+- 🔄 Real-time collaboration for shared todos/notes
+- 🔄 Data export/import functionality
+- 🔄 Advanced user analytics and insights
+- 🔄 Mobile app (React Native)
+- 🔄 Offline support with sync
 - 🔄 Advanced calculator functions
 - 🔄 Habit tracker integration
 

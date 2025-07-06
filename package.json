@@ -1,8 +1,8 @@
 {
   "name": "myutilitybox-pro",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
-  "description": "A comprehensive all-in-one utility application with 15+ productivity tools including todo list, notes, calculator, weather, pomodoro timer, QR generator, and much more!",
+  "description": "A comprehensive full-stack utility application with 15+ productivity tools, Firebase backend, user authentication, cloud sync, and professional landing page!",
   "keywords": [
     "react",
     "utility",
@@ -23,7 +23,13 @@
     "link-shortener",
     "all-in-one",
     "tools",
-    "web-app"
+    "web-app",
+    "firebase",
+    "authentication",
+    "cloud-sync",
+    "full-stack",
+    "landing-page",
+    "dashboard"
   ],
   "author": "Debsmit Saha",
   "repository": {
@@ -36,9 +42,11 @@
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^13.5.0",
+    "firebase": "^11.10.0",
     "qrcode": "^1.5.4",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-router-dom": "^7.6.3",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
