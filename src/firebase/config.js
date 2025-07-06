@@ -3,16 +3,17 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
+import { getAnalytics } from 'firebase/analytics';
 
 // Your web app's Firebase configuration
-// TODO: Replace with your actual Firebase config
 const firebaseConfig = {
-  apiKey: "your-api-key-here",
-  authDomain: "your-project-id.firebaseapp.com",
-  projectId: "your-project-id",
-  storageBucket: "your-project-id.appspot.com",
-  messagingSenderId: "your-sender-id",
-  appId: "your-app-id"
+  apiKey: "AIzaSyCEGn-1ZR0D9u6VAh-XFzpwrblFjBmMLV0",
+  authDomain: "myutilitybox-pro.firebaseapp.com",
+  projectId: "myutilitybox-pro",
+  storageBucket: "myutilitybox-pro.firebasestorage.app",
+  messagingSenderId: "464298229837",
+  appId: "1:464298229837:web:4931ac1b07987ee0b1dc04",
+  measurementId: "G-M1SDKEHYSJ"
 };
 
 // Initialize Firebase
@@ -26,5 +27,8 @@ export const db = getFirestore(app);
 
 // Initialize Cloud Storage and get a reference to the service
 export const storage = getStorage(app);
+
+// Initialize Analytics (optional)
+export const analytics = getAnalytics(app);
 
 export default app;
