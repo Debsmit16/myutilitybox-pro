@@ -1,12 +1,18 @@
 {
   "name": "myutilitybox-pro",
-  "version": "2.0.0",
+  "version": "2.4.0",
   "private": true,
-  "description": "A comprehensive full-stack utility application with 15+ productivity tools, Firebase backend, user authentication, cloud sync, and professional landing page!",
+  "description": "🚀 Professional full-stack productivity suite with 15+ utility tools, Firebase backend, mobile-responsive design, user authentication, real-time cloud sync, and stunning UI/UX!",
   "keywords": [
     "react",
     "utility",
     "productivity",
+    "mobile-responsive",
+    "full-stack",
+    "firebase",
+    "authentication",
+    "cloud-sync",
+    "real-time",
     "todo",
     "calculator",
     "weather",
@@ -24,17 +30,27 @@
     "all-in-one",
     "tools",
     "web-app",
-    "firebase",
-    "authentication",
-    "cloud-sync",
-    "full-stack",
+    "pwa",
     "landing-page",
-    "dashboard"
+    "dashboard",
+    "professional",
+    "enterprise",
+    "modern",
+    "responsive",
+    "touch-optimized"
   ],
-  "author": "Debsmit Saha",
+  "author": {
+    "name": "Debsmit Saha",
+    "email": "debsmit.saha@example.com",
+    "url": "https://github.com/Debsmit16"
+  },
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/Debsmit16/myutilitybox-pro.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Debsmit16/myutilitybox-pro/issues"
   },
   "homepage": "https://myutilitybox-pro.vercel.app",
   "dependencies": {
