@@ -28,6 +28,7 @@ function Dashboard() {
   const [accentColor, setAccentColor] = useState(() => {
     return localStorage.getItem('accentColor') || '#007bff';
   });
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const { currentUser, logout } = useAuth();
 
   useEffect(() => {
@@ -37,12 +38,39 @@ function Dashboard() {
     localStorage.setItem('accentColor', accentColor);
   }, [theme, accentColor]);
 
+  // Handle mobile nav body scroll
+  useEffect(() => {
+    if (mobileNavOpen) {
+      document.body.classList.add('mobile-nav-open');
+    } else {
+      document.body.classList.remove('mobile-nav-open');
+    }
+
+    // Cleanup on unmount
+    return () => {
+      document.body.classList.remove('mobile-nav-open');
+    };
+  }, [mobileNavOpen]);
+
   const handleLogout = async () => {
     try {
       await logout();
     } catch (error) {
       console.error('Failed to log out:', error);
     }
+  };
+
+  const toggleMobileNav = () => {
+    setMobileNavOpen(!mobileNavOpen);
+  };
+
+  const closeMobileNav = () => {
+    setMobileNavOpen(false);
+  };
+
+  const handleToolSelect = (toolId) => {
+    setActiveTab(toolId);
+    closeMobileNav(); // Close mobile nav when tool is selected
   };
 
   const toolCategories = [
@@ -138,6 +166,9 @@ function Dashboard() {
       {/* Dashboard Header */}
       <header className="dashboard-header">
         <div className="header-left">
+          <button className="mobile-nav-toggle" onClick={toggleMobileNav}>
+            ☰
+          </button>
           <h1 className="dashboard-title">
             <span className="title-icon">🚀</span>
             MyUtilityBox Pro
@@ -153,8 +184,8 @@ function Dashboard() {
               Logout
             </button>
           </div>
-          <ThemeSwitcher 
-            theme={theme} 
+          <ThemeSwitcher
+            theme={theme}
             setTheme={setTheme}
             accentColor={accentColor}
             setAccentColor={setAccentColor}
@@ -162,9 +193,20 @@ function Dashboard() {
         </div>
       </header>
 
+      {/* Mobile Navigation Overlay */}
+      {mobileNavOpen && (
+        <div className="mobile-nav-overlay active" onClick={closeMobileNav}></div>
+      )}
+
       <div className="dashboard-content">
         {/* Sidebar Navigation */}
-        <nav className="dashboard-sidebar">
+        <nav className={`dashboard-sidebar ${mobileNavOpen ? 'mobile-open' : ''}`}>
+          <div className="sidebar-header">
+            <h3>Navigation</h3>
+            <button className="sidebar-close" onClick={closeMobileNav}>
+              ✕
+            </button>
+          </div>
           <div className="nav-categories">
             {toolCategories.map((category, categoryIndex) => (
               <div key={categoryIndex} className="nav-category">
@@ -173,7 +215,7 @@ function Dashboard() {
                   {category.tools.map((tool) => (
                     <button
                       key={tool.id}
-                      onClick={() => setActiveTab(tool.id)}
+                      onClick={() => handleToolSelect(tool.id)}
                       className={`nav-tool ${activeTab === tool.id ? 'active' : ''}`}
                     >
                       <span className="tool-icon">{tool.icon}</span>
