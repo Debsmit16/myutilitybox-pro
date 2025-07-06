@@ -113,26 +113,13 @@ function LandingPage() {
           </div>
         </div>
         <div className="hero-visual">
-          <div className="app-preview">
-            <div className="app-window">
-              <div className="app-header">
-                <div className="app-controls">
-                  <span className="control red"></span>
-                  <span className="control yellow"></span>
-                  <span className="control green"></span>
-                </div>
-              </div>
-              <div className="app-content">
-                <div className="tool-grid">
-                  <div className="tool-card">📝</div>
-                  <div className="tool-card">🔢</div>
-                  <div className="tool-card">⏰</div>
-                  <div className="tool-card">🌤️</div>
-                  <div className="tool-card">🎨</div>
-                  <div className="tool-card">🔐</div>
-                </div>
-              </div>
-            </div>
+          <div className="hero-icons">
+            <div className="hero-icon">📝</div>
+            <div className="hero-icon">🔢</div>
+            <div className="hero-icon">⏰</div>
+            <div className="hero-icon">🌤️</div>
+            <div className="hero-icon">🎨</div>
+            <div className="hero-icon">🔐</div>
           </div>
         </div>
       </section>
