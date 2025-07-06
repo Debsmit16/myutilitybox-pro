@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot, query, orderBy } from 'firebase/firestore';
+import { useAuth } from '../contexts/AuthContext';
+import { db } from '../firebase/config';
 import './NotePad.css';
 
 const NotePad = () => {
@@ -9,33 +12,70 @@ const NotePad = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [showSidebar, setShowSidebar] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const { currentUser } = useAuth();
 
   const categories = ['All', 'General', 'Work', 'Personal', 'Ideas', 'Important'];
 
+  // Load notes from Firestore with real-time updates
   useEffect(() => {
-    const savedNotes = JSON.parse(localStorage.getItem('notes') || '[]');
-    setNotes(savedNotes);
-  }, []);
+    // Clear previous user's data immediately
+    setNotes([]);
+    setCurrentNote({ id: null, title: '', content: '', category: 'General' });
+    setSelectedNoteId(null);
+    setLoading(true);
 
-  const saveNote = () => {
+    if (!currentUser) {
+      setLoading(false);
+      return;
+    }
+    const notesRef = collection(db, 'users', currentUser.uid, 'notes');
+    const q = query(notesRef, orderBy('updatedAt', 'desc'));
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const notesData = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setNotes(notesData);
+      setLoading(false);
+    }, (error) => {
+      console.error('Error fetching notes:', error);
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, [currentUser]);
+
+  const saveNote = async () => {
     if (!currentNote.title.trim() && !currentNote.content.trim()) return;
+    if (!currentUser) return;
 
-    const noteToSave = {
-      ...currentNote,
-      id: currentNote.id || Date.now(),
-      title: currentNote.title || 'Untitled Note',
-      updatedAt: new Date().toISOString(),
-      createdAt: currentNote.createdAt || new Date().toISOString()
-    };
+    try {
+      const noteData = {
+        title: currentNote.title || 'Untitled Note',
+        content: currentNote.content,
+        category: currentNote.category,
+        updatedAt: new Date()
+      };
 
-    const updatedNotes = currentNote.id
-      ? notes.map(note => note.id === currentNote.id ? noteToSave : note)
-      : [...notes, noteToSave];
+      if (currentNote.id) {
+        // Update existing note
+        const noteRef = doc(db, 'users', currentUser.uid, 'notes', currentNote.id);
+        await updateDoc(noteRef, noteData);
+      } else {
+        // Create new note
+        noteData.createdAt = new Date();
+        const notesRef = collection(db, 'users', currentUser.uid, 'notes');
+        const docRef = await addDoc(notesRef, noteData);
+        setSelectedNoteId(docRef.id);
+      }
 
-    setNotes(updatedNotes);
-    localStorage.setItem('notes', JSON.stringify(updatedNotes));
-    setSelectedNoteId(noteToSave.id);
-    setIsEditing(false);
+      setIsEditing(false);
+    } catch (error) {
+      console.error('Error saving note:', error);
+      alert('Failed to save note. Please try again.');
+    }
   };
 
   const createNewNote = () => {
@@ -50,14 +90,21 @@ const NotePad = () => {
     setIsEditing(false);
   };
 
-  const deleteNote = (noteId) => {
+  const deleteNote = async (noteId) => {
+    if (!currentUser) return;
+
     if (window.confirm('Are you sure you want to delete this note?')) {
-      const updatedNotes = notes.filter(note => note.id !== noteId);
-      setNotes(updatedNotes);
-      localStorage.setItem('notes', JSON.stringify(updatedNotes));
-      if (selectedNoteId === noteId) {
-        setCurrentNote({ id: null, title: '', content: '', category: 'General' });
-        setSelectedNoteId(null);
+      try {
+        const noteRef = doc(db, 'users', currentUser.uid, 'notes', noteId);
+        await deleteDoc(noteRef);
+
+        if (selectedNoteId === noteId) {
+          setCurrentNote({ id: null, title: '', content: '', category: 'General' });
+          setSelectedNoteId(null);
+        }
+      } catch (error) {
+        console.error('Error deleting note:', error);
+        alert('Failed to delete note. Please try again.');
       }
     }
   };
@@ -69,10 +116,34 @@ const NotePad = () => {
     return matchesSearch && matchesCategory;
   });
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
+  const formatDate = (timestamp) => {
+    if (!timestamp) return 'Unknown';
+
+    // Handle Firestore timestamp
+    const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
     return date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   };
+
+  if (!currentUser) {
+    return (
+      <div className="notepad">
+        <div className="auth-required">
+          <h3>Please sign in to access your notes</h3>
+          <p>Your notes will be synced across all your devices!</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (loading) {
+    return (
+      <div className="notepad">
+        <div className="loading-state">
+          <h3>Loading your notes...</h3>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="notepad">

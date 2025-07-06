@@ -116,7 +116,7 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setCurrentUser(user);
-      
+
       if (user) {
         // Get user profile from Firestore
         const profile = await getUserProfile(user.uid);
@@ -124,7 +124,7 @@ export function AuthProvider({ children }) {
       } else {
         setUserProfile(null);
       }
-      
+
       setLoading(false);
     });
 

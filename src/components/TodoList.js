@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot, query, orderBy } from 'firebase/firestore';
+import { useAuth } from '../contexts/AuthContext';
+import { db } from '../firebase/config';
 import './TodoList.css';
 
 const TodoList = () => {
@@ -7,48 +10,92 @@ const TodoList = () => {
   const [filter, setFilter] = useState('all');
   const [editingId, setEditingId] = useState(null);
   const [editText, setEditText] = useState('');
+  const [loading, setLoading] = useState(true);
+  const { currentUser } = useAuth();
 
-  // Load todos from localStorage on component mount
+  // Load todos from Firestore with real-time updates
   useEffect(() => {
-    const savedTodos = localStorage.getItem('todos');
-    if (savedTodos) {
-      setTodos(JSON.parse(savedTodos));
+    // Clear previous user's data immediately
+    setTodos([]);
+    setLoading(true);
+
+    if (!currentUser) {
+      setLoading(false);
+      return;
     }
-  }, []);
+    const todosRef = collection(db, 'users', currentUser.uid, 'todos');
+    const q = query(todosRef, orderBy('createdAt', 'desc'));
 
-  // Save todos to localStorage whenever todos change
-  useEffect(() => {
-    localStorage.setItem('todos', JSON.stringify(todos));
-  }, [todos]);
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const todosData = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setTodos(todosData);
+      setLoading(false);
+    }, (error) => {
+      console.error('Error fetching todos:', error);
+      setLoading(false);
+    });
 
-  const addTodo = () => {
-    if (newTodo.trim()) {
-      const todo = {
-        id: Date.now(),
+    return () => unsubscribe();
+  }, [currentUser]);
+
+  const addTodo = async () => {
+    if (!newTodo.trim() || !currentUser) return;
+
+    try {
+      const todosRef = collection(db, 'users', currentUser.uid, 'todos');
+      await addDoc(todosRef, {
         text: newTodo.trim(),
         completed: false,
         priority: 'medium',
-        createdAt: new Date().toISOString()
-      };
-      setTodos([...todos, todo]);
+        createdAt: new Date()
+      });
       setNewTodo('');
+    } catch (error) {
+      console.error('Error adding todo:', error);
+      alert('Failed to add todo. Please try again.');
     }
   };
 
-  const deleteTodo = (id) => {
-    setTodos(todos.filter(todo => todo.id !== id));
+  const deleteTodo = async (id) => {
+    if (!currentUser) return;
+
+    try {
+      const todoRef = doc(db, 'users', currentUser.uid, 'todos', id);
+      await deleteDoc(todoRef);
+    } catch (error) {
+      console.error('Error deleting todo:', error);
+      alert('Failed to delete todo. Please try again.');
+    }
   };
 
-  const toggleTodo = (id) => {
-    setTodos(todos.map(todo =>
-      todo.id === id ? { ...todo, completed: !todo.completed } : todo
-    ));
+  const toggleTodo = async (id) => {
+    if (!currentUser) return;
+
+    try {
+      const todo = todos.find(t => t.id === id);
+      const todoRef = doc(db, 'users', currentUser.uid, 'todos', id);
+      await updateDoc(todoRef, {
+        completed: !todo.completed
+      });
+    } catch (error) {
+      console.error('Error updating todo:', error);
+      alert('Failed to update todo. Please try again.');
+    }
   };
 
-  const updatePriority = (id, priority) => {
-    setTodos(todos.map(todo =>
-      todo.id === id ? { ...todo, priority } : todo
-    ));
+  const updatePriority = async (id, priority) => {
+    if (!currentUser) return;
+
+    try {
+      const todoRef = doc(db, 'users', currentUser.uid, 'todos', id);
+      await updateDoc(todoRef, { priority });
+    } catch (error) {
+      console.error('Error updating priority:', error);
+      alert('Failed to update priority. Please try again.');
+    }
   };
 
   const startEdit = (id, text) => {
@@ -56,14 +103,20 @@ const TodoList = () => {
     setEditText(text);
   };
 
-  const saveEdit = () => {
-    if (editText.trim()) {
-      setTodos(todos.map(todo =>
-        todo.id === editingId ? { ...todo, text: editText.trim() } : todo
-      ));
+  const saveEdit = async () => {
+    if (!editText.trim() || !currentUser) return;
+
+    try {
+      const todoRef = doc(db, 'users', currentUser.uid, 'todos', editingId);
+      await updateDoc(todoRef, {
+        text: editText.trim()
+      });
+      setEditingId(null);
+      setEditText('');
+    } catch (error) {
+      console.error('Error updating todo text:', error);
+      alert('Failed to update todo. Please try again.');
     }
-    setEditingId(null);
-    setEditText('');
   };
 
   const cancelEdit = () => {
@@ -105,6 +158,27 @@ const TodoList = () => {
       default: return '#6c757d';
     }
   };
+
+  if (!currentUser) {
+    return (
+      <div className="todo-container">
+        <div className="auth-required">
+          <h3>Please sign in to access your todos</h3>
+          <p>Your todos will be synced across all your devices!</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (loading) {
+    return (
+      <div className="todo-container">
+        <div className="loading-state">
+          <h3>Loading your todos...</h3>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="todo-container">
