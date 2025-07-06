@@ -487,4 +487,4 @@ If you find MyUtilityBox Pro helpful, please consider:
 
 ---
 
-*Built with ❤️ by [Debsmit Saha](https://github.com/Debsmit16) | © 2024 MyUtilityBox Pro*
+*Built with ❤️ by [Debsmit Ghosh](https://github.com/Debsmit16) | © 2025 MyUtilityBox Pro*
